@@ -49,3 +49,14 @@ code {
 .pl-20{
   padding-left: 20px;
 }
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media (max-width:768px){
+    .padding-top-50 {
+      padding-top: 0px;
+  }
+}

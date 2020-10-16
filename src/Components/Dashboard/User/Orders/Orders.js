@@ -1,16 +1,54 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import DashboardHeader from '../../DashboardHeader/DashboardHeader';
 import { ReactComponent as Cloudcomputing } from '../../../../images/dashbord-icons/cloud-computing.svg'
-import PrimaryBtn from '../../../Shared/PrimaryBtn/PrimaryBtn'
 import styled from 'styled-components';
 import UserSidebar from '../../Sidebar/UserSidebar/UserSidebar';
-
+import { useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { InputSubmit } from '../../../Home/ContactForm/ContactForm';
+import { UserContext } from '../../../../App';
 
 
 const Orders = () => {
-    const handleBlur = () => {}
+    
+    const [loggedInUser] = useContext(UserContext);
+    const { register, handleSubmit, errors ,reset } = useForm();
+    const [submitMessage, setSubmitMessage]= useState(false)
+    
+    const id = useParams()
+    const [service, setService] = useState([])
 
+    const productId = id.id !== undefined ? (id.id) : '';
+    useEffect(() => {
+        productId && fetch(`http://localhost:5000/order/${productId}`)
+        .then((response) => response.json())
+        .then((data) => setService(data));
+      
+        }, [productId]);
+
+
+      const onSubmit = (data)=> {
+        let newOrder = service? { ...data, status: 'pending', image: service.image } : {...data , ...data, status: 'pending'};
+        
+        fetch('http://localhost:5000/addOrder',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+             body: JSON.stringify(newOrder),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if(data){
+                reset(true)
+                setSubmitMessage(true)
+            } 
+             
+          });
+            
+      }
+
+
+    
 
     return (
         <Container fluid>
@@ -25,48 +63,56 @@ const Orders = () => {
                     
                     <UserFormStyle>
 
-                        <form>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            {submitMessage && <p className='alert alert-success shake'>Order successfully Submitted !!</p>}
                             <div className="form-input">
-                                <input onBlur={handleBlur} type="text" name="name" placeholder="Your name / company’s name" />
+                                <input type="text" name="name" placeholder="Your name / company’s name" ref={register({ required: true })} />
+
+                                {errors.name && <span>This field is required</span>}
                             </div>
+
                             <div className="form-input">
-                                <input onBlur={handleBlur} type="email" name="email" placeholder="Your email address" />
+                                <input type="email" name="email" defaultValue={loggedInUser.email} placeholder="Your email address" ref={register({ required: true })} readOnly={loggedInUser.email? true : false}/>
+                                {errors.email && <span>Email field is required</span>}
                             </div>
+
                             <div className="form-input">
-                                <input onBlur={handleBlur} type="text" name="service" placeholder="Service Name" />
+                                <input ref={register({ required: true })} type="text" name="service" placeholder="Service Name" defaultValue={service && service.title} />
+                                {errors.service && <span>This field is required</span>}
                             </div>
+
                             <div className="form-input">
-                                <textarea name="details" placeholder='Project Details' onBlur={handleBlur}></textarea>
+                                <textarea name="details" placeholder='Project Details' ref={register({ required: true })} ></textarea>
+                                {errors.details && <span>Details field is required</span>}
                             </div>
                             
                             <Row>
                                 <Col md={6}>
                                     <div className="form-input">
-                                        <input onBlur={handleBlur} type="number" name="price" placeholder="Price" />
+                                        <input ref={register({ required: true })} type="number" name="price" placeholder="Price" />
+                                        {errors.price && <span>Price field is required</span>}
                                     </div>
                                 </Col>
 
                                 <Col md={6}>
                                     <div className='file-field'>
                                         {/* <p>{filefeild.name}</p> */}
-                                        <input type='file' name='file' id='file'required style={{ display: 'none' }}/>
+                                        <input type='file' name='file' id='file' style={{ display: 'none' }}/>
                                         <label htmlFor='file'>
                                             <Cloudcomputing width='25' fill='#0084ff' height='25' />
-                                            <span style={{ marginLeft: '10px' }}>Upload Image</span>
+                                            <span style={{ marginLeft: '10px' }}>Upload File</span>
                                         </label>
                                     </div>
                                 </Col>
-                                <PrimaryBtn>Submit</PrimaryBtn>
+                                <InputSubmit type="submit" />
                             </Row>
-
-                            
                         </form>
 
                     </UserFormStyle>
                 </Col>
             </Row>
         </Container>
-    );
+);
 };
 
 
@@ -138,13 +184,53 @@ export const UserFormStyle = styled.div`
         -moz-appearance: textfield;
     }
 
-    button {
+    input[type="submit"] {
         margin-left: 17px;
         margin-top: 20px;
-        padding: 11px 50px !important;
+        padding: 15px 50px !important;
     }
     
-    
+    .alert {
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+
+    .shake {
+        -webkit-animation-name: shake;
+        animation-name: shake;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        }
+        @-webkit-keyframes shake {
+        0%, 100% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        }
+        10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+        }
+        20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+        }
+        }
+        @keyframes shake {
+        0%, 100% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        }
+        10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+        }
+        20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+        }
+        } 
 
 
 `

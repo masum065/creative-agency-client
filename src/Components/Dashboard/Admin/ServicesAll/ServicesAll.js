@@ -33,9 +33,9 @@ const ServicesAll = () => {
                                     <td>Graphic Design</td>
                                     <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
                                     <td>
-                                        <Select selected='done'>
+                                        <Select selected='pending'>
                                             <option style={{color: '#FF4545'}} >Pending</option>
-                                            <option style={{color: '#20A15B'}} selected='Done'>Done</option>
+                                            <option selected style={{color: '#20A15B'}} >Done</option>
                                             <option style={{color: '#FFBD3E'}}>On Going</option>
                                         </Select>
                                     </td>

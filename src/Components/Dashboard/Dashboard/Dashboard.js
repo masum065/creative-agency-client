@@ -1,23 +1,48 @@
-import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import DashboardHeader from '../DashboardHeader/DashboardHeader';
-import UserSidebar from '../User/UserSidebar/UserSidebar';
+import React, { useContext, useEffect } from 'react';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { UserContext } from '../../../App';
+import ServicesAll from '../Admin/ServicesAll/ServicesAll';
+import Orders from '../User/Orders/Orders';
 
 const Dashboard = () => {
-    return (
-        <Container style={{padding: '20px'}} fluid>
-            <Row>
-                <DashboardHeader/>
-            </Row>
-            <Row>
-                <Col xl={2}>
-                <UserSidebar/>
-                </Col>
-                <Col style={{backgroundColor: '#F4F7FC'}} xl={10}>
+    const [loggedInUser] = useContext(UserContext);
+    const [isUser, setUser] = useState(false);
+    const history = useHistory();
 
-                </Col>
-            </Row>
-        </Container>
+    useEffect(()=>{
+        const abrotController = new AbortController();
+        const signal = abrotController.signal;
+
+        fetch('http://localhost:5000/checkAccess',{
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({email: loggedInUser.email})
+        },{signal : signal})
+        
+        .then(response => response.json())
+        .then(data => data && history.push(`/dashboard/servicesAll`))
+
+        return function cleanup() {
+            abrotController.abort()
+        }
+    },[history, loggedInUser.email])
+
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setUser(true)
+            isUser && history.push(`/dashboard/order`)
+        }, 400);
+        return () => clearTimeout(timer);
+      }, [history, isUser]);
+
+    return (
+
+           <>
+          
+           </>
+
     );
 };
 

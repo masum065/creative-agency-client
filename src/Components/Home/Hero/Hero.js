@@ -45,6 +45,25 @@ const HeroText = styled.div`
         margin-top: 10px;
     }
 
+    @media (max-width: 991px){
+        padding: 15px 0;
+         max-width: 85%;
+    }
+    @media (max-width: 1199px){
+        padding: 35px 0;
+        max-width: 80%;
+    }
+    @media (max-width: 768px){
+        padding-top: 40px;
+        max-width: 100%;
+        h1 {
+            font-size: 40px;
+            line-height: 50px;
+        }
+    }
+    
+    
+
 `
 
 export default Hero;

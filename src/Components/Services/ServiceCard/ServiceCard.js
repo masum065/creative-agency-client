@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ServiceCard = (props) => {
-    const {img, description , title} = props.service;
+    const {image, description , title, _id} = props.service;
     return (
-        <Col lg={4}>
-            <Link to='/home'>
+        <Col sm={6} lg={6} xl={4}>
+            <Link to={`/order/${_id}`}>
             <ServiceCardStyle>
-                <img src={img} alt={title.split(' ').slice(0,1)}/>
+                <img src={`data:image/png;base64,${image.img}`} alt={title.split(' ').slice(0,1)}/>
                 <h3>{title}</h3>
                 <p>{description}</p>
             </ServiceCardStyle>

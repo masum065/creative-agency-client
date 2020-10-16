@@ -47,6 +47,18 @@ const ContactFormStyle = styled.div`
     }
     
 } 
+    @media (max-width: 768px){
+        .form-input{
+            input, textarea{
+                padding: 11px 22px;
+            }
+            textarea {
+                min-height: 200px;
+            }
+        }
+        
+        
+    }
 
 `
 export const InputSubmit = styled.input`

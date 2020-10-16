@@ -14,7 +14,7 @@ const UserSidebar = () => {
     const [activeBar , setActiveBar] = useContext(DashBoadSidebar)
     return (
             <PanelSidebar>
-               <Link onClick={() => setActiveBar( {order: true})} to='/dashboard/orders'>
+               <Link onClick={() => setActiveBar( {order: true})} to='/dashboard/order'>
                    <p className={activeBar.order && 'active'}>
                    <OrderIcon />Order</p>
                 </Link>

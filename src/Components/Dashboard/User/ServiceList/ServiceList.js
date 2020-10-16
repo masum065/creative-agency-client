@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { useState ,useEffect, useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import { UserContext } from '../../../../App';
 import DashboardHeader from '../../DashboardHeader/DashboardHeader';
 import UserSidebar from '../../Sidebar/UserSidebar/UserSidebar';
 import ServiceListCard from './ServiceListCard/ServiceListCard';
-import webdesign from '../../../../images/icons/service1.png'
-import graphcdesign from '../../../../images/icons/service2.png'
 
 
-const serviceListData =[
-    {
-        title: 'Web & Mobile Design',
-        description: 'We craft stunning and amazing web UI, using a well drrafted UX to fit your product.',
-        img: webdesign,
-        status: 'pending'
-    },
-    {
-        title: 'Graphcs Design',
-        description: 'Amazing flyers, social media posts and brand representations that would make your brand stand out.',
-        img: graphcdesign,
-        status: 'done'
-    },
-]
 const ServiceList = () => {
+
+    const [loggedInUser] = useContext(UserContext)
+    const [serviceList, setServiceList] = useState([]);
+
+    useEffect(()=>{
+        const abrotController = new AbortController();
+        const signal = abrotController.signal;
+
+        fetch('http://localhost:5000/serviceList',{
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({email: loggedInUser.email})
+        },{signal : signal})
+        
+        .then(response => response.json())
+        .then(data => setServiceList(data))
+
+        return function cleanup() {
+            abrotController.abort()
+        }
+    },[loggedInUser.email])
+
 
     return (
         <Container fluid>
@@ -36,7 +43,7 @@ const ServiceList = () => {
 
                     <Row>
                         {
-                            serviceListData.map(service => <ServiceListCard bg={service} service={service}/>)
+                            serviceList.map(service => <ServiceListCard key={service._id} service={service}/>)
                         }
                     </Row>
                 </Col>

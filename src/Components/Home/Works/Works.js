@@ -43,6 +43,31 @@ const Works = () => {
         navText: false,
         arrows: false,
         margin: 50,
+        responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
       };
 
     return (
@@ -122,10 +147,19 @@ const WorskStle = styled.section`
 
     } 
 
-
+    @media (max-width: 768px){
+        ::before{
+            background: none;
+        }
+    }
 `
 const SliderBox = styled.div`
     margin-left: 100px;
     padding: 0px 18px;
+
+
+    @media (max-width: 768px){
+        margin-left: 0;
+    }
 `
 export default Works;

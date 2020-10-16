@@ -1,20 +1,27 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
+import serviceIcon from '../../../../../images/icons/service4.png'
 
 const ServiceListCard = (props) => {
 
-    const {img,title,status,description} = props.service
+    const {image,service,status,details} = props.service
     return (
         <Col xl={5}>
             <ServiceCardStyle>
                 <div className="service-head">
-                    <img src={img} alt=""/>
+                    
+
+        {
+            image ? <img src={`data:image/png;base64,${image.img}`} alt=""/>
+            :
+            <img src={serviceIcon} alt=""/>
+        }
                     <SwingBtn status = {status}>{status}</SwingBtn>
                 </div>
                 <div className="body">
-                    <h4>{title}</h4>
-                    <p>{description}</p>
+                    <h4>{service}</h4>
+                    <p>{details}</p>
                 </div>
             </ServiceCardStyle>
         </Col>

@@ -22,6 +22,10 @@ const SectionTitleStyle = styled.h2`
     span{
         color: #7AB259;
     }
+
+    @media (max-width:768px){
+        font-size: 30px;
+    }
 `
 
 export default SectionTitle;

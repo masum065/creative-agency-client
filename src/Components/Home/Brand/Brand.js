@@ -34,9 +34,9 @@ const brandLogos = [
 const Brand = () => {
     return (
         <Container>
-            <Row className='justify-content-center'>
+            <Row className = 'justify-content-center'>
                 {
-                    brandLogos.map((brand, index) => <Col  key={index} xl={2}> <BradBox><img src={brand.logo} alt={brand.name}/></BradBox></Col>)
+                    brandLogos.map((brand, index) => <Col  key={index} xs={4} sm={4} lg={2} xl={2}> <BradBox><img src={brand.logo} alt={brand.name}/></BradBox></Col>)
                 }
             </Row>
         </Container>
@@ -53,5 +53,22 @@ const BradBox = styled.div`
     img {
         max-width: 125px;
     }
+
+    @media (max-width: 768px){
+        height: 0px;
+        margin-top: 70px;
+        img {
+            max-width: 115px;
+        }
+    }
+
+    @media (max-width: 991px){
+        height: 0px;
+        margin-top: 75px;
+        img {
+            max-width: 120px;
+        }
+    }
+    
 `
 export default Brand;

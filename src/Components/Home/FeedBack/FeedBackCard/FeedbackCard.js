@@ -4,12 +4,12 @@ import styled from 'styled-components';
 
 const FeedbackCard = (props) => {
 
-    const {img, name, designation, quote} = props.feed;
+    const {userPhoto, name, designation, quote} = props.feed;
     return (
-        <Col xl={4}>
+        <Col md={6} xl={4}>
             <FeedbackCardStyle>
                 <div className="avatar">
-                    <img src={img} alt={name.split(' ').slice(0,1)}/>
+                    <img src={userPhoto} alt=''/>
                     <h4>{name} <span>{designation}</span> </h4>
                 </div>
                 <p>{quote}</p>
@@ -21,7 +21,7 @@ const FeedbackCard = (props) => {
 const FeedbackCardStyle = styled.div`
 border: 1px solid #BFBFBF;
     border-radius: 5px;
-    padding: 30px 10px 20px 20px;
+    padding: 30px 20px 20px 30px;
     margin-top: 30px;
 
     .avatar {
@@ -31,6 +31,7 @@ border: 1px solid #BFBFBF;
         img {
             display: inline-block;
             max-width: 60px;
+            border-radius: 50%;
         }
 
         h4 {

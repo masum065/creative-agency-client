@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { UserContext } from '../../../../App';
 import { InputSubmit } from '../../../Home/ContactForm/ContactForm';
 import { Span } from '../../../Home/ContactForm/ContactForm';
 import DashboardHeader from '../../DashboardHeader/DashboardHeader';
@@ -8,8 +10,28 @@ import UserSidebar from '../../Sidebar/UserSidebar/UserSidebar';
 import { UserFormStyle } from '../Orders/Orders';
 
 const AddReview = () => {
-    const { register, handleSubmit, errors } = useForm();
-    const onSubmit = data => console.log(data);
+    const [loggedInUser] = useContext(UserContext);
+    const [submitStatus, setSubmitStatus] = useState('');
+    const { register, handleSubmit, errors, reset } = useForm();
+    const onSubmit = data => {
+        if(data !== undefined){
+            const newReview = {...data , userPhoto: loggedInUser.picture}
+ 
+
+            fetch('http://localhost:5000/addReview',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newReview)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data){
+                    setSubmitStatus('Thanks For Your FeedBack')
+                reset()
+                }
+            })
+            }
+    };
 
 
     return (

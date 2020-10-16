@@ -57,6 +57,20 @@ padding: 60px;
         font-size: 14px;
         margin-bottom: -20px;
     }
+
+    @media (max-width: 768px){
+        .footer-left{
+            max-width: 100%;
+
+            h3 {
+                font-size: 26px;
+                line-height: 33px;
+            }
+            p{
+                margin-bottom: 30px;
+            }
+        } 
+    }
 `
 
 export default Footer;

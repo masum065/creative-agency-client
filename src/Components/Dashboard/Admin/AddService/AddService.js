@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import DashboardHeader from '../../DashboardHeader/DashboardHeader';
 import AdminSidebar from '../../Sidebar/AdminSidebar/AdminSidebar';
@@ -9,14 +9,44 @@ import PrimaryBtn from '../../../Shared/PrimaryBtn/PrimaryBtn';
 const AddService = () => {
 
     const [service , setService] = useState({})
+    const [file , setFile] = useState({})
 
+   
+        const handleBlur = (e) =>{
+            const newService = {...service};
+            newService[e.target.name] = e.target.value;
+            setService(newService);
+         
+        } 
 
-    const handleSubmit = e =>{
-        e.preventDefault();
-        console.log('submit');
-
-
+    const handleFileChange = (e) =>{
+        const newFile = e.target.files[0];
+        setFile(newFile);
     }
+
+    const handleSubmit = (e) =>{
+
+        const formData = new FormData()
+        formData.append('file', file);
+        formData.append('title', service.title);
+        formData.append('description', service.description);
+
+        fetch('http://localhost:5000/addService', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+
+        e.preventDefault();
+    }
+
+
     return (
         <Container fluid>
             <Row className="plt-20">
@@ -34,13 +64,13 @@ const AddService = () => {
                                 <Col xl={8}>
                                     <div className="form-input">
                                         <label htmlFor="title">Service Title</label>
-                                        <input type="text" name="title" placeholder="Enter Title"/>
+                                        <input type="text" onBlur={handleBlur} name="title" placeholder="Enter Title"/>
                                     </div>
                                 </Col>
                                 <Col xl={4}>
                                     <div className='file-field'>
-                                            {/* <p>{filefeild.name}</p> */}
-                                        <input type='file' name='file' id='file' style={{ display: 'none' }}/>
+                                            <p>{file.name}</p>
+                                        <input type='file' onChange={handleFileChange} id='file' name='file' style={{ display: 'none' }}/>
                                         <label htmlFor='file'>
                                                 <Cloudcomputing width='25' fill='#009444' height='25' />
                                             <span style={{ marginLeft: '10px' }}>Upload Image</span>
@@ -52,7 +82,7 @@ const AddService = () => {
                                 <Col xl={8}>
                                     <div className="form-input">
                                         <label htmlFor="description">Description</label>
-                                            <textarea name="description" placeholder="Enter Description" ></textarea>
+                                            <textarea onBlur={handleBlur} name="description" placeholder="Enter Description" ></textarea>
                                     </div>
                                 </Col>
                             </Row>
