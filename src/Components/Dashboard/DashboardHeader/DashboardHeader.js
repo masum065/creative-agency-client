@@ -9,7 +9,7 @@ const DashboardHeader = (props) => {
     return (
         <>
             <Col xl={2}>
-               <Link to='/home'><SiteLogo /> </Link>
+               <Link to='/'><SiteLogo /> </Link>
             </Col>
             <Col xl={5}>
                 <h5>{props.title}</h5>

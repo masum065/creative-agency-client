@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { UserContext } from '../../../../App';
 import PrimaryBtn from '../../../Shared/PrimaryBtn/PrimaryBtn';
 import SiteLogo from '../../../Shared/SiteLogo';
 
 const Menu = () => {
 
+    const [loggedInUser] = useContext(UserContext)
     const [open, setOpen] = useState(false)
     return (
             <Row className="py-4">
@@ -25,18 +27,15 @@ const Menu = () => {
                         <Link onClick={() => setOpen(!open)} to="/portfolio">Our Portfolio</Link>
                         <Link onClick={() => setOpen(!open)} to="/team">Our Team</Link>
                         <Link onClick={() => setOpen(!open)} to="/contact">Contact Us</Link>
-                        <Link onClick={() => setOpen(!open)} to="/dashboarrd"><PrimaryBtn>Login</PrimaryBtn></Link>
+                        {
+                            loggedInUser.name? <span style={{fontWeight: '700'}}>{loggedInUser.name}</span> : <Link onClick={() => setOpen(!open)} to="/dashboarrd"><PrimaryBtn>Login</PrimaryBtn></Link>
+                        }
                     </Ul>
                 </Col>
             </Row>
     );
 };
-// a{
-            // color: #474747;
-            // padding: 5px 15px;
-            // margin-right: 15px;
-            // font-size: 14px;
-        // }
+
 const MenuStyle = styled.div`
 
     width: 2rem;

@@ -1,11 +1,11 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyBiu3eijAXlWyHVb-aURvkFadzVqa1hBJU",
-    authDomain: "practice-api-27165-a30b9.firebaseapp.com",
-    databaseURL: "https://practice-api-27165-a30b9.firebaseio.com",
-    projectId: "practice-api-27165-a30b9",
-    storageBucket: "practice-api-27165-a30b9.appspot.com",
-    messagingSenderId: "826356712405",
-    appId: "1:826356712405:web:cf1f961fa61daf8849f35c"
-  };
+  apiKey: "AIzaSyD5EVMtNWOlXTDQ-5oPIe7lGTWO-s6EkLk",
+  authDomain: "crative-agency-0.firebaseapp.com",
+  databaseURL: "https://crative-agency-0.firebaseio.com",
+  projectId: "crative-agency-0",
+  storageBucket: "crative-agency-0.appspot.com",
+  messagingSenderId: "862131044081",
+  appId: "1:862131044081:web:e81b876eca7c7c2833b350"
+};
 
 export default firebaseConfig;

@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../../../App';
-import ServicesAll from '../Admin/ServicesAll/ServicesAll';
-import Orders from '../User/Orders/Orders';
+
 
 const Dashboard = () => {
     const [loggedInUser] = useContext(UserContext);
@@ -14,7 +13,7 @@ const Dashboard = () => {
         const abrotController = new AbortController();
         const signal = abrotController.signal;
 
-        fetch('http://localhost:5000/checkAccess',{
+        fetch('https://intense-coast-60093.herokuapp.com/checkAccess',{
             method: 'POST',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({email: loggedInUser.email})
@@ -40,7 +39,6 @@ const Dashboard = () => {
     return (
 
            <>
-          
            </>
 
     );

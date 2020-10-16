@@ -16,7 +16,7 @@ const MakeAdmin = () => {
     const onSubmit = data => {
 
 
-        fetch('http://localhost:5000/makeAdmin',{
+        fetch('https://intense-coast-60093.herokuapp.com/makeAdmin',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)

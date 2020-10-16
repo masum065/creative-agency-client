@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import DashboardHeader from '../../DashboardHeader/DashboardHeader';
 import AdminSidebar from '../../Sidebar/AdminSidebar/AdminSidebar';
 
 const ServicesAll = () => {
+    const [services, setServices] = useState([])
+    const [selectedService ,setSelectedService] = useState({})
+    const [color ,setColor] = useState(false)
+    
+    useEffect(()=>{
+        fetch('https://intense-coast-60093.herokuapp.com/allOrders')
+        .then(response => response.json())
+        .then(data => setServices(data))
+    },[color, selectedService])
+
+    const handleStatus = (status) =>{
+        
+        const orderId = selectedService._id;
+        const updatedStatus = status.toLowerCase()
+
+        console.log(selectedService.status);
+        // updating status
+        fetch(`https://intense-coast-60093.herokuapp.com/updateOrder/${orderId}`, {
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({status: updatedStatus})
+        })
+        .then(res => res.json())
+        .then(data => {console.log(data);})
+    }
     return (
         <Container fluid>
             <Row className="plt-20">
@@ -27,19 +52,31 @@ const ServicesAll = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Masum Billah</td>
-                                    <td>MasumBillah@email.com</td>
-                                    <td>Graphic Design</td>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                                    <td>
-                                        <Select selected='pending'>
-                                            <option style={{color: '#FF4545'}} >Pending</option>
-                                            <option selected style={{color: '#20A15B'}} >Done</option>
-                                            <option style={{color: '#FFBD3E'}}>On Going</option>
+                                {
+                                    services.map(service => <tr key={service._id}>
+                                        <td>{service.name}</td>
+                                        <td>{service.email}</td>
+                                        <td>{service.service}</td>
+                                        <td>{service.details}</td>
+                                        <td>
+                                        <Select color={service.status}
+                                            onClick={() => {
+                                                setSelectedService(service) 
+                                                setColor(true)
+                                            }}
+                                            onChange ={(e)=>{
+                                                handleStatus(e.target.value)
+                                            }}>
+                                                
+                                            <option selected={service.status === "pending"} style={{color: '#FF4545'}} >Pending</option>
+                                            <option selected={service.status === "done"} style={{color: '#20A15B'}} >Done</option>
+                                            <option selected={service.status === "on going"} style={{color: '#FFBD3E'}}>On Going</option>
                                         </Select>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                    )
+                                }
+                                
                             </tbody>
                         </table>
                     </ServiceTableStyle>
@@ -97,6 +134,6 @@ const Select = styled.select`
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    color : ${props => props.selected === 'done'? '#20A15B' : props.selected === 'pending'? '#FF4545' : '#FFBD3E'};
+    color : ${props => props.color === 'done'? '#20A15B' : props.color === 'pending'? '#FF4545' : '#FFBD3E'};
 `
 export default ServicesAll;

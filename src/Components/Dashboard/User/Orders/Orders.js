@@ -11,17 +11,15 @@ import { UserContext } from '../../../../App';
 
 
 const Orders = () => {
-    
     const [loggedInUser] = useContext(UserContext);
     const { register, handleSubmit, errors ,reset } = useForm();
     const [submitMessage, setSubmitMessage]= useState(false)
     
     const id = useParams()
     const [service, setService] = useState([])
-
     const productId = id.id !== undefined ? (id.id) : '';
     useEffect(() => {
-        productId && fetch(`http://localhost:5000/order/${productId}`)
+        productId && fetch(`https://intense-coast-60093.herokuapp.com/order/${productId}`)
         .then((response) => response.json())
         .then((data) => setService(data));
       
@@ -31,7 +29,7 @@ const Orders = () => {
       const onSubmit = (data)=> {
         let newOrder = service? { ...data, status: 'pending', image: service.image } : {...data , ...data, status: 'pending'};
         
-        fetch('http://localhost:5000/addOrder',{
+        fetch('https://intense-coast-60093.herokuapp.com/addOrder',{
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
              body: JSON.stringify(newOrder),
@@ -43,15 +41,12 @@ const Orders = () => {
                 setSubmitMessage(true)
             } 
              
-          });
-            
+          });   
       }
 
 
-    
-
     return (
-        <Container fluid>
+ <Container fluid>
             <Row className="plt-20">
                 <DashboardHeader title='Order' />
             </Row>
@@ -112,6 +107,7 @@ const Orders = () => {
                 </Col>
             </Row>
         </Container>
+
 );
 };
 

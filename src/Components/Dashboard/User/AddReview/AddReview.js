@@ -11,14 +11,15 @@ import { UserFormStyle } from '../Orders/Orders';
 
 const AddReview = () => {
     const [loggedInUser] = useContext(UserContext);
-    const [submitStatus, setSubmitStatus] = useState('');
+    
+    const [submitMessage, setSubmitMessage]= useState(false)
     const { register, handleSubmit, errors, reset } = useForm();
     const onSubmit = data => {
         if(data !== undefined){
             const newReview = {...data , userPhoto: loggedInUser.picture}
  
 
-            fetch('http://localhost:5000/addReview',{
+            fetch('https://intense-coast-60093.herokuapp.com/addReview',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newReview)
@@ -26,7 +27,7 @@ const AddReview = () => {
             .then(response => response.json())
             .then(data => {
                 if(data){
-                    setSubmitStatus('Thanks For Your FeedBack')
+                    setSubmitMessage(true)
                 reset()
                 }
             })
@@ -47,6 +48,8 @@ const AddReview = () => {
 
                 <UserFormStyle>
                     <form onSubmit={handleSubmit(onSubmit)}>
+                    {submitMessage && <p className='alert alert-success'>Thanks For Your FeedBack.</p>}
+
                         <div className="form-input">
                             <input name="name" placeholder='Your name' ref={register({ required: true })} />
                             {errors.name && <Span>Name field is required</Span>}
