@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import DashboardHeader from '../../DashboardHeader/DashboardHeader';
 import AdminSidebar from '../../Sidebar/AdminSidebar/AdminSidebar';
@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import PrimaryBtn from '../../../Shared/PrimaryBtn/PrimaryBtn';
 
 const AddService = () => {
-
+    document.title = "ADD New Service - Crative Agency"
     const [service , setService] = useState({})
     const [file , setFile] = useState({})
 

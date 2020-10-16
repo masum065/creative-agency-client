@@ -15,7 +15,7 @@ const DashboardHeader = (props) => {
                 <h5>{props.title}</h5>
             </Col>
             <Col className='text-right' xl={5}>
-    <h4>{loggedInUser.name}</h4>
+            <h4 style={{fontSize: '18px',paddingRight: '25px', fontWeight:'600'}}>{loggedInUser.name}</h4>
             </Col>
         </>
     );

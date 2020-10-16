@@ -5,6 +5,7 @@ import { UserContext } from '../../../App';
 
 
 const Dashboard = () => {
+    document.title = "Dashboard - Crative Agency"
     const [loggedInUser] = useContext(UserContext);
     const [isUser, setUser] = useState(false);
     const history = useHistory();

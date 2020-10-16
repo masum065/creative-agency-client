@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import UserSidebar from '../../Sidebar/UserSidebar/UserSidebar';
 import { UserFormStyle } from '../Orders/Orders';
 
 const AddReview = () => {
+    document.title = "ADD Review - Crative Agency"
     const [loggedInUser] = useContext(UserContext);
     
     const [submitMessage, setSubmitMessage]= useState(false)

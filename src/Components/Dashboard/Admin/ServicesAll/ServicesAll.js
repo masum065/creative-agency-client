@@ -3,8 +3,26 @@ import { Col, Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import DashboardHeader from '../../DashboardHeader/DashboardHeader';
 import AdminSidebar from '../../Sidebar/AdminSidebar/AdminSidebar';
+import { css } from "@emotion/core";
+import PulseLoader from "react-spinners/PulseLoader";
+
+
+
+const override = css`
+  display: block;
+  margin: 100px auto;
+  text-align: center;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 
 const ServicesAll = () => {
+    document.title = "All Services - Crative Agency"
+    const [loading] = useState(true)
     const [services, setServices] = useState([])
     const [selectedService ,setSelectedService] = useState({})
     const [color ,setColor] = useState(false)
@@ -39,7 +57,7 @@ const ServicesAll = () => {
                 <Col xl={2}>
                 <AdminSidebar/>
                 </Col>
-                <Col style={{backgroundColor: '#F4F7FC'}} xl={10}>
+                <Col style={{backgroundColor: '#F4F7FC', height:'85vh'}} xl={10}>
                     <ServiceTableStyle>
                         <table>
                             <thead>
@@ -52,6 +70,7 @@ const ServicesAll = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                            {!services.length && <PulseLoader css={override} size={15} color={"#7AB259"} loading={loading} />}
                                 {
                                     services.map(service => <tr key={service._id}>
                                         <td>{service.name}</td>

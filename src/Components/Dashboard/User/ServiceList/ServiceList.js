@@ -7,14 +7,14 @@ import ServiceListCard from './ServiceListCard/ServiceListCard';
 import { css } from "@emotion/core";
 import PulseLoader from "react-spinners/PulseLoader";
 
-
 const override = css`
   display: block;
   margin: 100px auto;
   border-color: red;
 `;
 const ServiceList = () => {
-    const [loading, setLoading] = useState(true)
+    document.title = "Service List - Crative Agency"
+    const [loading] = useState(true)
 
     const [loggedInUser] = useContext(UserContext)
     const [serviceList, setServiceList] = useState([]);

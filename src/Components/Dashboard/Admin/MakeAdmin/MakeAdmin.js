@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -8,13 +7,11 @@ import DashboardHeader from '../../DashboardHeader/DashboardHeader';
 import AdminSidebar from '../../Sidebar/AdminSidebar/AdminSidebar';
 
 const MakeAdmin = () => {
-
-    const [status, setState] = useState('')
+    document.title = "Make Admin - Crative Agency"
     const { register, handleSubmit, errors ,reset} = useForm();
 
 
     const onSubmit = data => {
-
 
         fetch('https://intense-coast-60093.herokuapp.com/makeAdmin',{
             method: 'POST',

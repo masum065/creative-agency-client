@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import Works from '../Works/Works';
 
 const Home = () => {
+    document.title = "Home - Crative Agency"
     return (
         <>
             <Header />

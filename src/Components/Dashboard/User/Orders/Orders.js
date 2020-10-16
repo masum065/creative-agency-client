@@ -11,6 +11,7 @@ import { UserContext } from '../../../../App';
 
 
 const Orders = () => {
+    document.title = "User Order - Crative Agency"
     const [loggedInUser] = useContext(UserContext);
     const { register, handleSubmit, errors ,reset } = useForm();
     const [submitMessage, setSubmitMessage]= useState(false)

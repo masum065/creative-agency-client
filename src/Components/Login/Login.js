@@ -11,6 +11,7 @@ import { UserContext } from '../../App';
 
 const Login = () => {
 
+    document.title = "Login - Crative Agency"
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const history = useHistory();
     const location = useLocation();
@@ -48,13 +49,13 @@ const Login = () => {
     return (
         <Container className='padding-top-50'>
             <Row className="justify-content-center text-center">
-                <Col xl={6}>
+                <Col xs={10} md={8} xl={6}>
                 <Link to='/home'><SiteLogo /></Link>
                     <LoginFormStyle>
                         <h4>Login With</h4>
                         <button onClick={handleGoogleSignIn}><img src={google} alt=""/> Continue with Google</button>
 
-                        <p className="craete">Don’t have an account? <span>Create an account</span> </p>
+                        <p className="craete">Don’t have an account? <span onClick={handleGoogleSignIn}>Create an account</span> </p>
 
                     </LoginFormStyle>
                 </Col>
