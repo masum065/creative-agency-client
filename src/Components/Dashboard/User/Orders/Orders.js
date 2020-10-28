@@ -229,6 +229,15 @@ export const UserFormStyle = styled.div`
         }
         } 
 
+        @media (max-width:767px){
+            max-width: 100%;
+
+
+            input[type="submit"] {
+                margin-top: 85px;
+            }
+        }
+
 
 `
 
